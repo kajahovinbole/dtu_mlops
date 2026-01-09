@@ -5,6 +5,12 @@ import torch
 from torch.utils.data import DataLoader, Subset
 from torchmetrics.classification import MulticlassAccuracy, MulticlassF1Score
 import matplotlib.pyplot as plt
+from pathlib import Path
+
+MODELS_DIR = Path("models")
+MODELS_DIR.mkdir(parents=True, exist_ok=True)
+FIG_DIR = Path("reports/figures")
+FIG_DIR.mkdir(parents=True, exist_ok=True)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -118,7 +124,7 @@ def train():
         if avg_val_loss < best_val_loss - 1e-4:
             best_val_loss = avg_val_loss
             patience_counter = 0
-            torch.save(model.state_dict(), "best_model.pth")
+            torch.save(model.state_dict(), MODELS_DIR / "best_model.pth")
         else:
             patience_counter += 1
             if patience_counter >= patience:
@@ -126,7 +132,7 @@ def train():
                 break
 
     print("Finished Training")
-    torch.save(model.state_dict(), "model.pth")
+    torch.save(model.state_dict(), MODELS_DIR / "model.pth")
 
     # Figs After training
     fig, axs = plt.subplots(1, 2, figsize=(12, 4))
@@ -142,7 +148,7 @@ def train():
     axs[1].set_ylabel("Accuracy")
 
     fig.tight_layout()
-    fig.savefig("training_statistics.png")
+    fig.savefig(FIG_DIR / "training_statistics.png")
     plt.close(fig)
 
     plt.figure(figsize=(6,4))
@@ -150,7 +156,7 @@ def train():
     plt.title("Training F1 (macro)")
     plt.xlabel("Epoch")
     plt.ylabel("F1")
-    plt.savefig("training_f1.png")
+    plt.savefig(FIG_DIR / "training_f1.png")
     plt.close()
 
 
