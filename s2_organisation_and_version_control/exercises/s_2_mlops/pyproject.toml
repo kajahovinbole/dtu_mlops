@@ -22,7 +22,9 @@ dependencies = [
     "flask>=3.1.2",
     "matplotlib>=3.10.8",
     "path>=17.1.1",
+    "scikit-learn>=1.8.0",
     "torch==2.6.0",
+    "torchmetrics>=1.8.2",
     "typer==0.15.1",
     "uvicorn==0.34.0",
 ]

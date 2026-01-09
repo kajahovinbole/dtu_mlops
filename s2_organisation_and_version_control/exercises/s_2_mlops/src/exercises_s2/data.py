@@ -1,5 +1,4 @@
 from pathlib import Path
-from flask import app
 import torch
 import typer
 from torch.utils.data import Dataset
@@ -13,7 +12,7 @@ class MyDataset(Dataset):
 
     def __init__(self, data_path: Path) -> None:
         self.data_path = data_path
-        datadir = self.data_path
+        datadir = Path(self.data_path)
 
 
         train_images, train_targets = [], []

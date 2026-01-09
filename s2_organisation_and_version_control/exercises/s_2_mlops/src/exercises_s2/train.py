@@ -1,11 +1,10 @@
-from exercises_s2.model import Model
-from exercises_s2.data import MyDataset
 import torch
-
-from torch.utils.data import DataLoader, Subset
+from pathlib import Path
+from torch.utils.data import DataLoader, TensorDataset, Subset
 from torchmetrics.classification import MulticlassAccuracy, MulticlassF1Score
 import matplotlib.pyplot as plt
-from pathlib import Path
+
+from exercises_s2.model import Model
 
 MODELS_DIR = Path("models")
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
@@ -19,14 +18,18 @@ train_f1 = MulticlassF1Score(num_classes=10, average="macro").to(device)
 val_accuracy = MulticlassAccuracy(num_classes=10).to(device)
 val_f1 = MulticlassF1Score(num_classes=10, average="macro").to(device)
 
-
 splits = torch.load("data/splits.pt")
-dataset = MyDataset("data/raw")
 
-train_ds = Subset(dataset, splits["train"])
-val_ds   = Subset(dataset, splits["val"])
+# Load processed tensors
+images = torch.load("data/processed/images.pt")
+labels = torch.load("data/processed/labels.pt")
 
-lr = 0.001
+# Build dataset and subsets using saved indices
+full_ds = TensorDataset(images, labels)
+train_ds = Subset(full_ds, splits["train"])
+val_ds   = Subset(full_ds, splits["val"])
+
+lr = 1e-3
 
 
 def train():

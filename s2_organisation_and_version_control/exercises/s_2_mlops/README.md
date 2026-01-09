@@ -65,7 +65,7 @@ dataset, normalizes images to mean 0 and standard deviation 1, and saves the
 processed tensors.
 
 ```bash
-python src/exercises_s2/data.py preprocess data/raw data/processed
+uv run src/exercises_s2/data.py preprocess data/raw/corruptmnist_v1  data/processed
 ```
 outputs:
 - data/processed/images.pt
@@ -75,7 +75,7 @@ outputs:
 Creates reproducible train/validation/test splits and stores the indices.
 
 ```bash
-python src/exercises_s2/splits.py
+uv run src/exercises_s2/splits.py
 ```
 
 output:
@@ -86,7 +86,7 @@ Trains the CNN using the training split, evaluates on the validation split each
 epoch, applies early stopping, and saves training statistics.
 
 ```bash
-python src/exercises_s2/train.py
+uv run src/exercises_s2/train.py
 ```
 
 outputs:
@@ -97,7 +97,7 @@ outputs:
 ### 4. Evaluate the model
 Evaluates a trained model checkpoint on the test split and prints metrics.
 ```bash
-python src/exercises_s2/evaluate.py models/best_model.pth
+uv run src/exercises_s2/evaluate.py models/best_model.pth
 ```
 Printed output:
 - Test accuracy
@@ -108,7 +108,7 @@ Printed output:
 Extracts intermediate feature representations from the trained model and
 visualizes them in 2D using t-SNE.
 ```bash
-python src/exercises_s2/visualize.py models/best_model.pth
+uv run src/exercises_s2/visualize.py models/best_model.pth
 ```
 
 Output
