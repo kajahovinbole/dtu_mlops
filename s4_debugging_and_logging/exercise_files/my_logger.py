@@ -1,4 +1,8 @@
 from loguru import logger
+import sys
+
+logger.remove()
+logger.add(sys.stderr, level="WARNING")
 
 logger.debug("Used for debugging your code.")
 logger.info("Informative messages from your code.")
